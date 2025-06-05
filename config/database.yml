@@ -6,9 +6,6 @@ default: &default
   username: root
   password: tiger
   host: localhost
-  variables:
-    innodb_strict_mode: 0
-    sql_mode: NO_ENGINE_SUBSTITUTION
   timezone: UTC
 
 development:
