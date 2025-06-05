@@ -1,0 +1,27 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  collation: utf8mb4_unicode_ci
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: tiger
+  host: localhost
+  variables:
+    innodb_strict_mode: 0
+    sql_mode: NO_ENGINE_SUBSTITUTION
+  timezone: UTC
+
+development:
+  <<: *default
+  database: spree_starter_development
+
+test:
+  <<: *default
+  database: spree_starter_test
+
+production:
+  <<: *default
+  database: spree_starter_production
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
