@@ -24,3 +24,6 @@ production:
   host: <%= ENV['DATABASE_HOST'] %>
   port: <%= ENV['DATABASE_PORT'] %>
   sslmode: <%= ENV['DATABASE_SSL_MODE'] %>
+  variables:
+    sql_mode: 'STRICT_ALL_TABLES'
+    innodb_strict_mode: 1

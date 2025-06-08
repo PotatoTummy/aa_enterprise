@@ -57,10 +57,7 @@ end
 # such as promotions, shipping methods, etc
 Rails.application.config.after_initialize do
   # Rails.application.config.spree.shipping_methods << Spree::ShippingMethods::SuperExpensiveNotVeryFastShipping
-  Rails.application.config.spree.payment_methods << Spree::Gateway::StripeGateway
-  Rails.application.config.spree.payment_methods << Spree::Gateway::Razorpay
-  Rails.application.config.spree.payment_methods << Spree::Gateway::Paytm
-
+  
   # Rails.application.config.spree.calculators.tax_rates << Spree::TaxRates::FinanceTeamForcedMeToCodeThis
 
   # Rails.application.config.spree.stock_splitters << Spree::Stock::Splitters::SecretLogicSplitter

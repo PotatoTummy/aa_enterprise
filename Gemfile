@@ -121,11 +121,6 @@ gem "spree_google_analytics", "~> 1.0"
 gem "spree_klaviyo", "~> 1.0"
 gem "spree_i18n"
 
-# Payment Gateway
-# gem 'razorpay'
-# gem 'spree_razorpay_gateway'
-# gem 'paytm-pg'
-# gem 'spree_paytm', github: 'isantoshsingh/spree_paytm'
 
 # Sentry for error/performance monitoring
 gem 'sentry-ruby'
