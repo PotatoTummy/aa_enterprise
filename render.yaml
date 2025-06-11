@@ -4,12 +4,13 @@ envVarGroups:
       - key: DB_POOL
         value: 10
 
-databases:
-  - name: spree-db
-    databaseName: spree
-    user: spree
-    plan: basic-1gb
-    diskSizeGB: 10
+# Remove the databases section since you're using Railway
+# databases:
+#   - name: spree-db
+#     databaseName: spree
+#     user: spree
+#     plan: basic-1gb
+#     diskSizeGB: 10
 
 services:
   - type: web
@@ -17,20 +18,10 @@ services:
     runtime: ruby
     plan: standard
     buildCommand: bin/render-build.sh
-    startCommand: bundle exec rails db:migrate && bundle exec puma -C config/puma.rb
+    startCommand: bundle exec puma -C config/puma.rb
     envVars:
       - key: DATABASE_URL
-        sync: false
-      - key: DATABASE_NAME
-        sync: false
-      - key: DATABASE_USERNAME
-        sync: false
-      - key: DATABASE_PASSWORD
-        sync: false
-      - key: DATABASE_HOST
-        sync: false
-      - key: DATABASE_PORT
-        sync: false
+        value: your_railway_mysql_connection_string_here
       - key: SECRET_KEY_BASE
         sync: false
       - key: RAILS_ENV
@@ -53,17 +44,7 @@ services:
     startCommand: bundle exec sidekiq
     envVars:
       - key: DATABASE_URL
-        sync: false
-      - key: DATABASE_NAME
-        sync: false
-      - key: DATABASE_USERNAME
-        sync: false
-      - key: DATABASE_PASSWORD
-        sync: false
-      - key: DATABASE_HOST
-        sync: false
-      - key: DATABASE_PORT
-        sync: false
+        value: your_railway_mysql_connection_string_here
       - key: REDIS_URL
         fromService:
           type: keyvalue
