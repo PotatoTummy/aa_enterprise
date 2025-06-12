@@ -27,15 +27,30 @@
 threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+# Specifies the `environment` that Puma will run in.
+environment ENV.fetch("RAILS_ENV") { "development" }
+
+# Specifies the `port` that Puma will listen on to receive requests
 port ENV.fetch("PORT", 3000)
 
-# Allow puma to be restarted by `bin/rails restart` command.
+# Specifies the number of `workers` to boot in clustered mode.
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+
+# Use the `preload_app!` method when specifying a `workers` number.
+preload_app!
+
+# Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
 # Run the Solid Queue supervisor inside of Puma for single-server deployments
 plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 
-# Specify the PID file. Defaults to tmp/pids/server.pid in development.
-# In other environments, only set the PID file if requested.
-pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+end
+
+# Specify the PID file
+pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+
+# Set up socket location
+bind "unix://#{ENV.fetch('SOCKET_PATH') { 'tmp/sockets/puma.sock' }}" if ENV["SOCKET_PATH"]
