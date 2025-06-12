@@ -13,8 +13,11 @@ bundle exec rails assets:clean
 
 # Database setup commands
 bundle exec rails db:environment:set RAILS_ENV=production
-bundle exec rails db:drop db:create db:schema:load db:seed
+
+# Try to create database if it doesn't exist, then migrate
+bundle exec rails db:create || true
 bundle exec rails db:migrate
+bundle exec rails db:seed
 
 # Clear and rebuild cache
 bundle exec rails tmp:clear

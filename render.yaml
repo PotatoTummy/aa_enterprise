@@ -20,8 +20,8 @@ services:
     buildCommand: bin/render-build.sh
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
-      - key: DATABASE_URL
-        value: your_railway_mysql_connection_string_here
+      # - key: DATABASE_URL
+      #   value: your_railway_mysql_connection_string_here
       - key: SECRET_KEY_BASE
         sync: false
       - key: RAILS_ENV
