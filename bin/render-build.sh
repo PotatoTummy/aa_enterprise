@@ -1,25 +1,26 @@
 #!/usr/bin/env bash
-# exit on error
+# Exit on any error
 set -o errexit
 
-# Install MySQL client
-apt-get update
-apt-get install -y mysql-client
+# Install PostgreSQL client if needed (optional on Render)
+apt-get update && apt-get install -y postgresql-client
 
-# Build commands
+# Install dependencies
 bundle install
+
+# Compile assets
 bundle exec rails assets:precompile
 bundle exec rails assets:clean
 
-# Database setup commands
+# Set environment (optional, just to be explicit)
 bundle exec rails db:environment:set RAILS_ENV=production
 
-# Try to create database if it doesn't exist, then migrate
+# Setup the database (safe on redeploys)
 bundle exec rails db:create || true
 bundle exec rails db:migrate
 bundle exec rails db:seed
 
-# Clear and rebuild cache
+# Clear caches and logs
 bundle exec rails tmp:clear
 bundle exec rails log:clear
 bundle exec rails cache:clear

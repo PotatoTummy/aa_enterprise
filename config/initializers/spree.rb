@@ -57,7 +57,8 @@ end
 # such as promotions, shipping methods, etc
 Rails.application.config.after_initialize do
   # Rails.application.config.spree.shipping_methods << Spree::ShippingMethods::SuperExpensiveNotVeryFastShipping
-  
+  # Rails.application.config.spree.payment_methods << Spree::PaymentMethods::VerySafeAndReliablePaymentMethod
+
   # Rails.application.config.spree.calculators.tax_rates << Spree::TaxRates::FinanceTeamForcedMeToCodeThis
 
   # Rails.application.config.spree.stock_splitters << Spree::Stock::Splitters::SecretLogicSplitter
@@ -85,12 +86,13 @@ Rails.application.config.after_initialize do
 end
 
 Spree.user_class = "Spree::User"
-Spree.admin_user_class = 'Spree::User'
+# Use a different class for admin users
+# Spree.admin_user_class = 'AdminUser'
 
-Rails.application.config.to_prepare do
-  require_dependency 'spree/authentication_helpers'
-end
+            Rails.application.config.to_prepare do
+              require_dependency 'spree/authentication_helpers'
+            end
 
-if defined?(Devise) && Devise.respond_to?(:parent_controller)
-  Devise.parent_controller = "Spree::BaseController"
-end
+            if defined?(Devise) && Devise.respond_to?(:parent_controller)
+              Devise.parent_controller = "Spree::BaseController"
+            end

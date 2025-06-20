@@ -8,11 +8,11 @@ ActiveSupport.on_load :active_record do
     Rails.logger.warn "Unable to set MySQL session variables: #{e.message}"
   end
   
-  module ActiveRecord
-    module ConnectionAdapters
-      class AbstractMysqlAdapter
-        NATIVE_DATABASE_TYPES[:string] = { name: "varchar", limit: 191 }
-      end
-    end
-  end
+  # module ActiveRecord
+  #   module ConnectionAdapters
+  #     class AbstractMysqlAdapter
+  #       NATIVE_DATABASE_TYPES[:string] = { name: "varchar", limit: 191 }
+  #     end
+  #   end
+  # end
 end 

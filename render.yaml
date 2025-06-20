@@ -4,13 +4,11 @@ envVarGroups:
       - key: DB_POOL
         value: 10
 
-# Remove the databases section since you're using Railway
-# databases:
-#   - name: spree-db
-#     databaseName: spree
-#     user: spree
-#     plan: basic-1gb
-#     diskSizeGB: 10
+databases:
+  - name: spree-db
+    databaseName: spree_production
+    user: spree_user
+    plan: starter
 
 services:
   - type: web
@@ -20,8 +18,10 @@ services:
     buildCommand: bin/render-build.sh
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
-      # - key: DATABASE_URL
-      #   value: your_railway_mysql_connection_string_here
+      - key: DATABASE_URL
+        fromDatabase:
+          name: spree-db
+          property: connectionString
       - key: SECRET_KEY_BASE
         sync: false
       - key: RAILS_ENV
@@ -44,14 +44,16 @@ services:
     startCommand: bundle exec sidekiq
     envVars:
       - key: DATABASE_URL
-        value: your_railway_mysql_connection_string_here
+        fromDatabase:
+          name: spree-db
+          property: connectionString
+      - key: SECRET_KEY_BASE
+        sync: false
       - key: REDIS_URL
         fromService:
           type: keyvalue
           name: keyvalue
           property: connectionString
-      - key: SECRET_KEY_BASE
-        sync: false
       - key: REDIS_CACHE_URL
         fromService:
           type: keyvalue
@@ -61,7 +63,7 @@ services:
         value: production
       - key: RACK_ENV
         value: production
-  
+
   - type: keyvalue
     name: keyvalue
     ipAllowList: []
